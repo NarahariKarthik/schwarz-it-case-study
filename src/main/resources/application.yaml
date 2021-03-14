@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: schwarz-IT-case-study
+  datasource:
+    url: jdbc:h2:mem:schwarzit
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    generate-ddl: true
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+  groovy:
+    template:
+      check-template-location: false
+server:
+  port: 7999

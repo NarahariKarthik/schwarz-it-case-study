@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h2 align="center">Temperature Vs Bike Riders</h2>
+    <div id="container" style="width: 700px; height: 500px; margin: 0 auto"></div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script th:inline="javascript">
+    $(function () {
+        Highcharts.chart('container', {
+            chart: {
+                zoomType: 'xy'
+            },
+            title: {
+                text: 'Average Monthly Temperature and Bike Riders'
+            },
+            xAxis: [{
+                categories: [[${barGraph.keySet()}]],
+                crosshair: true
+            }],
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    format: '{value}°C',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                title: {
+                    text: 'Temperature',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                }
+            }, { // Secondary yAxis
+                title: {
+                    text: 'No. of Riders',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                labels: {
+                    format: '{value} riders',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                opposite: true
+            }],
+            tooltip: {
+                shared: true
+            },
+            series: [{
+                name: 'Bike Riders',
+                type: 'column',
+                yAxis: 1,
+                data: [[${barGraph.values()}]],
+                tooltip: {
+                    valueSuffix: ' riders'
+                }
+
+            }, {
+                name: 'Temperature',
+                type: 'spline',
+                data: [[${lineGraph.values()}]],
+                tooltip: {
+                    valueSuffix: '°C'
+                }
+            }]
+        });
+    });
+</script>
+
+</body>
+</html>
